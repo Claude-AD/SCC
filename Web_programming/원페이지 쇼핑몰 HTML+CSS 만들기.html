@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>나만의쇼핑몰</title>
+
+    <style>
+        /* 폰트 적용 */
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        /* 전체 주문 창 CSS */
+        .card {
+            width: 500px;
+            margin: 100px auto auto auto;
+        }
+
+        /* 제네시스 로고 이미지 CSS */
+        .g70 {
+            width: 70px;
+            height: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* 주문하기 버튼 CSS */
+        .btn-primary {
+            display: block;
+            width: 80px;
+            margin: auto;
+        }
+    </style>
+    <script>
+        function order() {
+            alert('주문이 완료되었습니다.'); // 주문이 완료되었다는 alert창 띄우기
+        }
+    </script>
+</head>
+<body>
+<div class="card">
+    <!-- 상품 사진 -->
+    <img src="https://www.motorgraph.com/news/photo/202009/26320_83348_3315.jpg" class="card-img-top" alt="...">
+
+    <!-- 상품 설명 및 주문 -->
+    <div class="card-body">
+        <!-- 상품명 및 가격 -->
+        <h3 class="card-title">Genesis G70 <img class="g70"
+                                                src="https://ivdesign.co.kr/data/file/symbol_logo/data_symbol_logo_GENESIS.jpg">
+            <span style="font-size: 13px"> 가격: 4,830만원</span>
+        </h3>
+        <!-- 상품 설명 -->
+        <p class="card-text">제네시스 G70 페이스리프트는 제네시스의 투-라인 패밀리룩을 따르면서 이제는 완전히 제네시스의 아이덴티티로
+            편입되었다.</p>
+
+        <!-- 주문 창 -->
+        <h3>Order</h3>
+        <!-- 주문자 성함 -->
+        <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">주문자 성함</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroup">
+            </div>
+        </div>
+        <!-- 수량 select box -->
+        <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">수량</div>
+                </div>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option value="" selected disabled hidden> -- 수량을 선택하세요 --</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <!-- 주문자 주소 -->
+        <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">주소</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroup">
+            </div>
+        </div>
+        <!-- 주문자 전화번호 -->
+        <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">전화번호</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroup">
+            </div>
+        </div>
+
+        <!-- 주문하기 버튼, 누르면 주문이 완료되었다는 alert창 띄움 -->
+        <a onclick="order()" href="#" class="btn btn-primary">주문하기</a>
+    </div>
+</div>
+</body>
+</html>
