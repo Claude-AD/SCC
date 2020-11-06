@@ -63,9 +63,8 @@
                 url: "https://api.manana.kr/exchange/rate.json",
                 data: {},
                 success: function (response) {
-                    let USDKRW_rate = response[1]['rate'] // API에서 달러-원 환율 찾아서 변수에 저장
-                    let temp_html = `<p class="rate_text">달러-원 환율: ${USDKRW_rate}</p>`
-                    $('#rate').append(temp_html) // 상품 설명과 주문 창 사이에 환율 문구 삽입
+                    let USDKRW_rate = response[1]['rate']; // API에서 달러-원 환율 찾아서 변수에 저장
+                    $('#rate').text(USDKRW_rate); // 상품 설명과 주문 창 사이에 환율 문구 삽입
                 }
             })
         });
@@ -82,70 +81,71 @@
 
     <!-- 상품 설명 및 주문 -->
     <div class="card-body">
-        <!-- 상품명 및 가격 -->
-        <h3 class="card-title">Genesis G70 <img class="g70"
-                                                src="https://ivdesign.co.kr/data/file/symbol_logo/data_symbol_logo_GENESIS.jpg">
-            <span style="font-size: 13px"> 가격: 4,830만원</span>
-        </h3>
-        <!-- 상품 설명 -->
-        <p class="card-text">제네시스 G70 페이스리프트는 제네시스의 투-라인 패밀리룩을 따르면서 이제는 완전히 제네시스의 아이덴티티로
-            편입되었다.</p>
-
-        <!-- 환율 표시 -->
-        <div id="rate"></div>
-
-        <!-- 주문 창 -->
-        <h3>Order</h3>
-        <!-- 주문자 성함 -->
-        <div class="col-auto">
-            <label class="sr-only" for="inlineFormInputGroup">Username</label>
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">주문자 성함</div>
-                </div>
-                <input type="text" class="form-control" id="inlineFormInputGroup">
-            </div>
+        <div class="item-desc">
+            <!-- 상품명 및 가격 -->
+            <h3 class="card-title">Genesis G70 <img class="g70"
+                                                    src="https://ivdesign.co.kr/data/file/symbol_logo/data_symbol_logo_GENESIS.jpg">
+                <span style="font-size: 13px"> 가격: 4,830만원</span>
+            </h3>
+            <!-- 상품 설명 -->
+            <p class="card-text">제네시스 G70 페이스리프트는 제네시스의 투-라인 패밀리룩을 따르면서 이제는 완전히 제네시스의 아이덴티티로
+                편입되었다.</p>
+            <!-- 환율 표시 -->
+            <p class="rate_text">달러-원 환율: <span id="rate"></span></p>
         </div>
-        <!-- 수량 select box -->
-        <div class="col-auto">
-            <label class="sr-only" for="inlineFormInputGroup">Username</label>
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">수량</div>
+        <div class="item-order">
+            <!-- 주문 창 -->
+            <h3>Order</h3>
+            <!-- 주문자 성함 -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">주문자 성함</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup">
                 </div>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option value="" selected disabled hidden> -- 수량을 선택하세요 --</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
             </div>
-        </div>
-        <!-- 주문자 주소 -->
-        <div class="col-auto">
-            <label class="sr-only" for="inlineFormInputGroup">Username</label>
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">주소</div>
+            <!-- 수량 select box -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">수량</div>
+                    </div>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option value="" selected disabled hidden> -- 수량을 선택하세요 --</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
                 </div>
-                <input type="text" class="form-control" id="inlineFormInputGroup">
             </div>
-        </div>
-        <!-- 주문자 전화번호 -->
-        <div class="col-auto">
-            <label class="sr-only" for="inlineFormInputGroup">Username</label>
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">전화번호</div>
+            <!-- 주문자 주소 -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">주소</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup">
                 </div>
-                <input type="text" class="form-control" id="inlineFormInputGroup">
             </div>
+            <!-- 주문자 전화번호 -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">전화번호</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup">
+                </div>
+            </div>
+            <!-- 주문하기 버튼, 누르면 주문이 완료되었다는 alert창 띄움 -->
+            <a onclick="order()" href="#" class="btn btn-primary">주문하기</a>
         </div>
-
-        <!-- 주문하기 버튼, 누르면 주문이 완료되었다는 alert창 띄움 -->
-        <a onclick="order()" href="#" class="btn btn-primary">주문하기</a>
     </div>
 </div>
 </body>
