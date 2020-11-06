@@ -50,20 +50,22 @@
             margin: auto;
         }
 
+        /* 환율 문구 CSS */
         .rate_text {
             color: blue;
         }
     </style>
     <script>
+        // JQuery 이용하여 페이지 로딩되자마자 ajax call하기
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: "https://api.manana.kr/exchange/rate.json",
                 data: {},
                 success: function (response) {
-                    let USDKRW_rate = response[1]['rate']
+                    let USDKRW_rate = response[1]['rate'] // API에서 달러-원 환율 찾아서 변수에 저장
                     let temp_html = `<p class="rate_text">달러-원 환율: ${USDKRW_rate}</p>`
-                    $('#rate').append(temp_html)
+                    $('#rate').append(temp_html) // 상품 설명과 주문 창 사이에 환율 문구 삽입
                 }
             })
         });
