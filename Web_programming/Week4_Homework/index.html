@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>나만의쇼핑몰</title>
+
+    <style>
+        /* 폰트 적용 */
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        /* 전체 주문 창 CSS */
+        .card {
+            width: 500px;
+            margin: 100px auto auto auto;
+        }
+
+        /* 제네시스 로고 이미지 CSS */
+        .g70 {
+            width: 70px;
+            height: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* 주문하기 버튼 CSS */
+        .btn-primary {
+            display: block;
+            width: 80px;
+            margin: auto;
+        }
+
+        /* 환율 문구 CSS */
+        .rate_text {
+            color: blue;
+        }
+    </style>
+    <script>
+        // JQuery 이용하여 페이지 로딩되자마자 ajax call하기
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "https://api.manana.kr/exchange/rate.json",
+                data: {},
+                success: function (response) {
+                    let USDKRW_rate = response[1]['rate']; // API에서 달러-원 환율 찾아서 변수에 저장
+                    $('#rate').text(USDKRW_rate); // 상품 설명과 주문 창 사이에 환율 문구 삽입
+                }
+            })
+            // 마찬가지로 페이지 로딩되자마자 모든 주문 현황 불러옴
+            showOrder();
+        });
+
+        // 상품 주문 함수
+        function makeOrder() {
+
+            // jQuery를 이용하여 주문 정보를 받아옴
+            let name = $('#name').val();
+            let quantity = $('#quantity').val();
+            let address = $('#address').val();
+            let phone = $('#phone').val();
+
+            // ajax를 이용하여 주문 정보를 서버에 전달하고 성공하면 서버로부터 받은 메시지 출력한 뒤 페이지 새로고침
+            $.ajax({
+                type: "POST",
+                url: "/order",
+                data: {name_give: name, quantity_give: quantity, address_give: address, phone_give: phone},
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+
+        // 모든 주문 목록 보여주는 함수
+        function showOrder() {
+            // ajax를 이용하여 서버로부터 주문 정보를 전달받아 table형식으로 출력
+            $.ajax({
+                type: "GET",
+                url: "/order",
+                data: {},
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        let orders = response['orders'];
+                        for (let i = 0; i < orders.length; i++) {
+                            // 서버로부터 받아오는 주문 정보
+                            let name = orders[i]['name'];
+                            let quantity = orders[i]['quantity'];
+                            let address = orders[i]['address'];
+                            let phone = orders[i]['phone'];
+
+                            // 받아온 주문 정보를 table형식으로 변환
+                            let temp_html = `<tr>
+                                                <th scope="row">${name}</th>
+                                                <td>${quantity}</td>
+                                                <td>${address}</td>
+                                                <td>${phone}</td>
+                                             </tr>`
+
+                            // 페이지 아래에 계속 붙여줌
+                            $('#all_orders').append(temp_html);
+                        }
+                    } else { // 실패시 알림창 띄움
+                        alert("리뷰를 받아오지 못했습니다");
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="card">
+    <!-- 상품 사진 -->
+    <img src="https://www.motorgraph.com/news/photo/202009/26320_83348_3315.jpg" class="card-img-top" alt="...">
+
+    <!-- 상품 설명 및 주문 -->
+    <div class="card-body">
+        <div class="item-desc">
+            <!-- 상품명 및 가격 -->
+            <h3 class="card-title">Genesis G70 <img class="g70"
+                                                    src="https://ivdesign.co.kr/data/file/symbol_logo/data_symbol_logo_GENESIS.jpg">
+                <span style="font-size: 13px"> 가격: 4,830만원</span>
+            </h3>
+            <!-- 상품 설명 -->
+            <p class="card-text">제네시스 G70 페이스리프트는 제네시스의 투-라인 패밀리룩을 따르면서 이제는 완전히 제네시스의 아이덴티티로
+                편입되었다.</p>
+            <!-- 환율 표시 -->
+            <p class="rate_text">달러-원 환율: <span id="rate"></span></p>
+        </div>
+        <div class="item-order">
+            <!-- 주문 창 -->
+            <h3>Order</h3>
+            <!-- 주문자 성함 -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">주문자 성함</div>
+                    </div>
+                    <input type="text" class="form-control name" id="name">
+                </div>
+            </div>
+            <!-- 수량 select box -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">수량</div>
+                    </div>
+                    <select class="form-control quantity" id="quantity">
+                        <option value="" selected disabled hidden> -- 수량을 선택하세요 --</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+            <!-- 주문자 주소 -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">주소</div>
+                    </div>
+                    <input type="text" class="form-control address" id="address">
+                </div>
+            </div>
+            <!-- 주문자 전화번호 -->
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">전화번호</div>
+                    </div>
+                    <input type="text" class="form-control phone" id="phone">
+                </div>
+            </div>
+            <!-- 주문하기 버튼, 누르면 makeOrder()함수를 실행하여 주문 정보를 DB로 보냄 -->
+            <a onclick="makeOrder()" href="#" class="btn btn-primary">주문하기</a>
+        </div>
+    </div>
+
+    <!-- 모든 주문 목록 -->
+    <div class="orders">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">이름</th>
+                <th scope="col">수량</th>
+                <th scope="col">주소</th>
+                <th scope="col">전화번호</th>
+            </tr>
+            </thead>
+            <tbody id="all_orders"></tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
